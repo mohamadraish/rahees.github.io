@@ -1,11 +1,119 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Product Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .form-container {
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #aaa;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    table {
+      width: 100%;
+      margin-top: 30px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .no-products {
+      text-align: center;
+      color: #999;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Product Management</h1>
-  <p>यहां आप अपने प्रोडक्ट जोड़ सकते हैं।</p>
+
+  <h1>Product Management</h1>
+  <div class="form-container">
+    <input type="text" id="productName" placeholder="Product Name">
+    <input type="number" id="productPrice" placeholder="Product Price (₹)">
+    <input type="number" id="productWeight" placeholder="Weight (kg)">
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Price (₹)</th>
+        <th>Weight (Kg)</th>
+        <th>Date & Time</th>
+      </tr>
+    </thead>
+    <tbody id="productList">
+      <tr><td colspan="4" class="no-products">No products added yet.</td></tr>
+    </tbody>
+  </table>
+
+  <script>
+    let products = [];
+
+    function addProduct() {
+      const name = document.getElementById("productName").value.trim();
+      const price = document.getElementById("productPrice").value.trim();
+      const weight = document.getElementById("productWeight").value.trim();
+      const dateTime = new Date().toLocaleString();
+
+      if (!name || !price || !weight) {
+        alert("Please fill all fields.");
+        return;
+      }
+
+      products.push({ name, price, weight, dateTime });
+
+      // Clear input fields
+      document.getElementById("productName").value = "";
+      document.getElementById("productPrice").value = "";
+      document.getElementById("productWeight").value = "";
+
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+
+      if (products.length === 0) {
+        list.innerHTML = `<tr><td colspan="4" class="no-products">No products added yet.</td></tr>`;
+        return;
+      }
+
+      products.forEach((product) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${product.name}</td>
+          <td>₹${product.price}</td>
+          <td>${product.weight} Kg</td>
+          <td>${product.dateTime}</td>
+        `;
+        list.appendChild(row);
+      });
+    }
+  </script>
+
 </body>
 </html>
