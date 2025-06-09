@@ -1,54 +1,112 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <style>
-    body { font-family: Arial; background: #f2f2f2; padding: 50px; }
-    .login-box {
-      background: white;
-      padding: 30px;
-      max-width: 400px;
-      margin: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #aaa;
-    }
-    input {
-      display: block;
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-    }
-    .error { color: red; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>लॉगिन और रजिस्ट्रेशन</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .toggle {
+            margin-top: 10px;
+            color: #007bff;
+            cursor: pointer;
+        }
+        .toggle:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p class="error" id="error"></p>
-  </div>
+    <div class="container" id="loginForm">
+        <h2>लॉगिन</h2>
+        <form id="login">
+            <input type="email" id="loginEmail" placeholder="ईमेल" required>
+            <input type="password" id="loginPassword" placeholder="पासवर्ड" required>
+            <button type="submit">लॉगिन करें</button>
+        </form>
+        <p class="toggle" onclick="showRegister()">अकाउंट नहीं है? रजिस्टर करें</p>
+    </div>
 
-  <script>
-    function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+    <div class="container" id="registerForm" style="display: none;">
+        <h2>रजिस्ट्रेशन</h2>
+        <form id="register">
+            <input type="text" id="regName" placeholder="नाम" required>
+            <input type="email" id="regEmail" placeholder="ईमेल" required>
+            <input type="password" id="regPassword" placeholder="पासवर्ड" required>
+            <button type="submit">रजिस्टर करें</button>
+        </form>
+        <p class="toggle" onclick="showLogin()">पहले से अकाउंट है? लॉगिन करें</p>
+    </div>
 
-      if (username === "raees@123" && password === "000000") {
-        window.location.href = "index.html";
-      } else {
-        document.getElementById("error").innerText = "गलत username या password!";
-      }
-    }
-  </script>
+    <script>
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+
+        // लॉगिन फॉर्म सबमिट
+        document.getElementById('login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            // यहाँ आप बैकएंड API कॉल कर सकते हैं। अभी के लिए डायरेक्ट रीडायरेक्ट कर रहे हैं।
+            alert(`लॉगिन डिटेल्स: \nईमेल: ${email}\nपासवर्ड: ${password}`);
+            window.location.href = 'index.html'; // index.html पर रीडायरेक्ट
+        });
+
+        // रजिस्ट्रेशन फॉर्म सबमिट
+        document.getElementById('register').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            alert(`रजिस्ट्रेशन डिटेल्स: \nनाम: ${name}\nईमेल: ${email}\nपासवर्ड: ${password}`);
+            // यहाँ बैकएंड API कॉल करें
+        });
+    </script>
 </body>
 </html>
